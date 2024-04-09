@@ -147,3 +147,5 @@ void open(int servoID, int angle){
   robot.LED(servoID1, &rgb[0] );
   delay(100);
  }
+
+ // IT WORKS
