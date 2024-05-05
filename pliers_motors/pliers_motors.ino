@@ -240,6 +240,25 @@ void Release(){
   Servo_9g_Small();
 }
 
+void Search(){
+  while(!switch_left() && !switch_right()){
+    if(!switch_left()){
+      closeSmallLeft();
+      if(!switch_left())
+        openLeft();
+    }
+    if(!switch_right()){
+      closeSmallRight();
+      if(!switch_right())
+        openRight();
+    }
+  }
+  //Send 1 to master to inform that two pot have been found
+  Wire.beginTransmission(1);//change by master ID
+  Wire.write(1);
+  Wire.endTransmission();
+}
+
 void performAction(int action) {
   switch(action) {
     case 0:
@@ -255,7 +274,7 @@ void performAction(int action) {
       Release();
       break;
     case 4:
-      downSmall();
+      Search();
       break;
     case 5:
       downBig();
@@ -283,6 +302,9 @@ void performAction(int action) {
       break;
     case 13:
       up();
+      break;
+    case 14:
+      downSmall();
       break;
     default:
       // Handle default case, if needed
